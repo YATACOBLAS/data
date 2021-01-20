@@ -83,14 +83,11 @@ jQuery(document).ready(function($){
         ver=document.getElementById("espera");
         ver.innerHTML='Cambiando Estado....';
         var select = document.getElementById('state'); 
-        var state= select.value;
-        var formData = new FormData();
-        formData.append('estado', state);
-        formData.append('remesas',remesas);
-        console.log(remesas);
+        var state= select.value;  
+      console.log(remesas);
 
-        var data = {};
-        data.estado = "wc-recaudo-conf";
+       var data = {};
+        data.estado = state;
         data.data = remesas;
       
         $.ajax({
@@ -99,7 +96,7 @@ jQuery(document).ready(function($){
             data:JSON.stringify(data),
             dataType: 'json',
             success: function(res){
-
+                    console.log(res);
                 /*
                 ver.innerHTML='';
                 var respuesta =document.getElementById("respuesta");

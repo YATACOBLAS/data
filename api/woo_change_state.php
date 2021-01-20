@@ -6,13 +6,22 @@ global $wpdb;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') 
 {
-    $body = json_decode(file_get_contents('php://input'), true);
 
+
+    // wc-recaudo-nove
+    // $order = wc_get_order(18907);
+    //            if($order){
+    //                $order->update_status( 'wc-recaudo-nove', '', true );
+    //            }
+    // exit;
+
+    $body = json_decode(file_get_contents('php://input'), true);
+    $estado = $body['estado'];
     for ($i=0; $i < count($body['data']); $i++) 
     {
 
         $id_guia = $body['data'][$i]['id_guia'];
-
+      
         $sql= $wpdb->prepare("
         SELECT post_id FROM wp_postmeta
         WHERE meta_key = '_wc_shipment_tracking_items' AND 
@@ -27,16 +36,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                 $post_id = $wpdb->last_result[0]->post_id;
                 $order = wc_get_order($post_id);
                 if($order){
-                    //$order->update_status( 'wc-recaudo-conf', '', true );
+                    $order->update_status( $estado, '', true );
+                    $body['data'][$i]['estado']='Actualizado';
                 }
                 else
                 {
-                    //no se actualizo el estado
+                    $body['data'][$i]['id_guia']='No logro la Actualizacion';
                 }
             }
             else
             {
-                //no encontrado
+                $body['data'][$i]['estado']='No se encontro un pedido con esta guia';
             }   
         }
 
