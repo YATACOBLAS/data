@@ -58,19 +58,10 @@ jQuery(document).ready(function($){
         boton=document.getElementById("Show");
         boton.setAttribute("disabled", "");
         ver=document.getElementById("esperar");
-        ver.innerHTML='Espere....';
-
-    //   var = extensiones_permitidas = new Array(".gif", ".jpg", ".doc", ".pdf");
-    //   extension = (archivo.substring(archivo.lastIndexOf("."))).toLowerCase();
-
-    //   for (var i = 0; i < extensiones_permitidas.length; i++) {
-    //      if (extensiones_permitidas[i] == extension) {
-    //      permitida = true;
-    //      break;
-    //      }
-    //   }
-      
-
+        ver.innerHTML='Espere....';      
+        caja=document.getElementById("table-body");
+        caja.innerHTML='';
+        remesas=[];
         var myFile = document.getElementById('archivo'); 
         var file = myFile.files[0];
         var formData = new FormData();
@@ -80,14 +71,11 @@ jQuery(document).ready(function($){
              url:'<?php echo site_url();?>/api/woo_set_state_order',
               type:'POST',
              data:formData,
-                    // data: {
-                     // action:"peticionCargar",
-                     // nonce: SolicitudesAjax.seguridad,       
-                    // data:'formData'},
                     cache: false,  
                   contentType: false,
                   processData: false,
                       success: function(res){
+                      
                         ver.innerHTML='';
                         console.log(res);
                         for(let index = 0; index < res.length; index++) {  remesas.push(res[index]); }

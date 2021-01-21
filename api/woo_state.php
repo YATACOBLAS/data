@@ -20,12 +20,15 @@ if(!empty($_FILES["archivo"])){
         if(file_exists($rutaDeSubidas)){
             if($extension=='xlsb'){
                 convertFile($ubicacionTemporal,$rutaDeSubidas);
-            } else {           
+            } else if($extension=='xlsx'|| $extension =='xls'){           
                 $nuevaUbicacion = $rutaDeSubidas."\\".$nombreArchivo;              
                 $resultado = move_uploaded_file($ubicacionTemporal, $nuevaUbicacion);
                         if ($resultado === true) {
                         printExcel($nuevaUbicacion,$rutaDeSubidas);
                         } else { echo "<h1>Error al subir archivo</h1>"; }
+                   }
+                   else{
+                    echo "<h1>La extension no es aceptable </h1>";
                    } 
         }else{ echo "<h1>la ubicaciones no existe </h1>";  }
         }else{ echo '<h1>No subio Ningun Archivo</h1>';  } 
