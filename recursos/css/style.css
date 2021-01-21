@@ -2,3 +2,154 @@
 .state{ position:relative; top:35px; left:60px }
 #button{  position:absolute; right:200px; background-color:green;}
             
+* {
+    font-family: "Open Sans";
+    margin: 0;
+}
+
+:root {
+    --verde: #009E6B;
+}
+
+.nav {
+    text-align: center;
+    padding: 10px;
+    background: var(--verde);
+
+}
+
+.nav p {
+    color: white;
+    font-size: 25px;
+}
+
+input[type="file"] {
+    background-color: #009E6B;
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+
+}
+
+label[for="archivo"] {
+    color: #6E6E6E;
+    display: inline-block;
+    cursor: pointer;
+    padding: 15px 30px !important;
+    font-size: 15px;
+    margin: 0px 10px 4px -4px;
+    text-align: center;
+    border: 1px solid #6E6E6E;
+    transition: all 0.3s;
+}
+
+label[for="archivo"]:hover {
+    color: var(--verde);
+    border: 1px solid var(--verde);
+}
+
+label img {
+    position: absolute;
+    width: 50px;
+    margin: 0;
+    top: 85px;
+}
+
+input[type="submit"] {
+    background-color: #009E6B;
+    padding: 15px 80px;
+    border: 1px solid var(--verde);
+    font-size: 15px;
+    transition: all 0.3s;
+    color: white;
+}
+
+input:hover {
+    background-color: #00C57E;
+    border: 1px solid #00C57E;
+}
+
+/* Contenedor general */
+.wrap {
+    /* border: 1px solid blue; */
+    text-align: center;
+    margin: 30px 0px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.titulo {
+    text-align: center;
+    margin: 10px;
+    color: #767676;
+}
+
+/*Select            */
+.custom-select {
+    margin: 10px auto;
+    position: relative;
+
+    font-family: Arial;
+    border: 1px solid #6E6E6E;
+
+    width: 240px;
+
+
+}
+
+.custom-select select {
+    display: none;
+
+}
+
+.select-selected {}
+
+/* flecha arriba */
+.select-selected:after {
+    position: absolute;
+    content: "";
+    top: 20px;
+    right: 10px;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-color: black transparent transparent transparent;
+}
+
+/* flecha abajo    */
+.select-selected.select-arrow-active:after {
+    border-color: transparent transparent black transparent;
+    top: 7px;
+}
+
+.select-items div,
+.select-selected {
+
+    padding: 8px 16px;
+
+    cursor: pointer;
+    user-select: none;
+}
+
+.select-items {
+    position: absolute;
+    color: black;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: white;
+
+}
+
+.select-hide {
+    display: none;
+}
+
+.select-items div:hover,
+.same-as-selected {
+    background-color: #ECECEC;
+}

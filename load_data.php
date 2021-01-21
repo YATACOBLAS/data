@@ -50,6 +50,7 @@ function config_scripts($hook){
    }
     wp_register_style( 'custom-style', plugins_url( '/recursos/css/style.css', __FILE__ ) ); 
     wp_enqueue_style( 'custom-style');  
+     wp_enqueue_script( 'custom-script', plugins_url( '/recursos/js/design.js', __FILE__ ),array('jquery'));
     // wp_enqueue_script( 'custom-script', plugins_url( '/recursos/js/app.js', __FILE__ ),array('jquery')); 
     //  wp_localize_script('custom-script','SolicitudesAjax',array(
     //         //para hacer solicitudes siempre a esta direccion que maneja wordpress

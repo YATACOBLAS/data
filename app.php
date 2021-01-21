@@ -1,11 +1,16 @@
-<h1>Cargar la lista de productos</h1>  
+
+<link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">    
+<div class="nav">
+    <p>PANEL DE CAMBIO DE ESTADOS </p>
+</div>   
 <div class="wrap">
     <form  method="post" enctype="multipart/form-data" id="formuploadajax">
-            <input type="file" name="archivo" id="archivo">
-            <br><br>
+    <input type="file" name="archivo" id="archivo"><label for="archivo">Seleccionar archivo
+                <img src="https://raw.githubusercontent.com/erickmatias/plugin_wordpress_excel/main/recursos/icon/excel.png" alt="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
             <input  type="submit" name="enviar" value="Show">
+
     </form>
-<div>
+
      <form  method="post" id="changeState" >
             <?php
             global $wpdb;
@@ -15,8 +20,8 @@
             "); 
             $wpdb->query($sql);
             if($wpdb->last_error == "") { $array= unserialize($wpdb->last_result[0]->option_value) ; ?>
-                <label class="state" for="cars">Elegir Estado:</label>
-                <select id="state" name="state" class="state" >
+                <label  for="state" class>Cambiar estado a:</label>
+                <select id="state" name="state" class="rounded p-2 " >
                 <?php foreach($array['options'] as $key => $value){  echo "<option value=".$key.">".$value."</option>";}   ?>
                 </select>           
                 <?php  }
@@ -24,14 +29,52 @@
             <BR></BR>   
             <button type="submit" id="button" name="enviar" value="Estado">Cambiar Estado </button> 
         </form>
+    
+    <div class="container sm:container mx-auto sm:mx-auto grid grid-cols-5 sm:grid-cols-5 lg:grid-cols-6 gap-4 mt-10">
+        
+        <table class=" border-collapse border border-green-800 col-span-2 col-start-2">
+            <thead>
+                <tr class="bg-green-600 text-white">
+                <th class="border border-green-600 px-3 sm:px-3 md:px-5 py-1 sm:py-3 "> Remesa </th>
+                <th class="border border-green-600 px-3 sm:px-3 md:px-5 py-1 sm:py-3 " > Ubicado en BD </th>
+            </tr>
+            </thead>
+            <tbody class="bg-gray-200 ">
+                <tr>
+                    <td class="border border-green-600 py-3 text-center  font-medium ">
+                        Actualización
+                    </td>
+                    <td class="border border-green-600 py-3 text-center text-red-600  font-medium">
+                        asdasda
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class=" border-collapse border border-green-800 col-start-4 lg:col-start-5">
+            <thead>
+            <tr class="bg-green-600 text-white">
+                <th class="border border-green-600 px-2 sm:px-3 md:px-5 py-1 sm:py-3  "> Actualización </th>
+            </tr>
+            </thead>
+            <tbody class="bg-gray-200 ">
+                <tr >
+                    <td class="border border-green-600 py-3 sm:py-3 text-center  font-medium ">
+                        sadasdasd
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-    <BR></BR>
+    <div class="container mx-auto flex justify-center mt-6">
+        <button class="bg-green-600 hover:bg-green-500 font-medium p-2 border-radius transform hover:scale-110 motion-reduce:transform-none text-white rounded">Actualizar estado</button>
+
+    </div>
     <div id="espera">
     </div>
     <div id="respuesta">
 
     </div>
-<BR></BR>
+
 
 </div>
 <script>
