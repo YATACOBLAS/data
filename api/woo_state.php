@@ -72,7 +72,6 @@ if(!empty($_FILES["archivo"])){
                   if($valorRaw!='Remesa'){
                         //$arrayEstado[$valorRaw]='POR CAMBIAR';
                         $arrayEstado[$cont]['id_guia']=$valorRaw;
-                        $arrayEstado[$cont]['estado']='Por Cambiar';
                         $cont++;
                     }
             }}}} else{  

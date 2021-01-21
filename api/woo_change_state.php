@@ -17,6 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 
     $body = json_decode(file_get_contents('php://input'), true);
     $estado = $body['estado'];
+    $respuesta_array=array();
     for ($i=0; $i < count($body['data']); $i++) 
     {
 
@@ -34,19 +35,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             if(count($wpdb->last_result)>0)
             {
                 $post_id = $wpdb->last_result[0]->post_id;
+               
                 $order = wc_get_order($post_id);
+
                 if($order){
-                    $order->update_status( $estado, '', true );
-                    $body['data'][$i]['estado']='Actualizado';
+
+                    $sql= $wpdb->prepare("
+                    UPDATE wp_posts
+                    SET
+                        post_status = %s
+                    WHERE ID = %s
+                    ",$estado,$post_id);
+                    $wpdb->query($sql);
+                    if($wpdb->last_error == "") 
+                    {
+                        $body['data'][$i]['estado']='Actualizado';
+                        $body['data'][$i]['_bd']='Si se encontró';
+                    }
+                    else
+                    {
+                        $body['data'][$i]['estado']='No se Actualizó';
+                        $body['data'][$i]['_bd']='Se encontro pero sucedio un Error';
+                    }
                 }
-                else
+                else        
                 {
-                    $body['data'][$i]['id_guia']='No logro la Actualizacion';
+                    $body['data'][$i]['_bd']='Se encontro pero sucedio un Error';
+                    $body['data'][$i]['estado']='No se Actualizó';
                 }
             }
             else
             {
-                $body['data'][$i]['estado']='No se encontro un pedido con esta guia';
+                $body['data'][$i]['_bd']='No se encontró';
+                $body['data'][$i]['estado']='No se Actualizó';
+               // $body['data'][$i]['BD']='No se encontro un pedido con esta guia';
             }   
         }
 

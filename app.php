@@ -3,15 +3,14 @@
 <div class="nav">
     <p>PANEL DE CAMBIO DE ESTADOS </p>
 </div>   
-<div class="wrap">
-    <form  method="post" enctype="multipart/form-data" id="formuploadajax">
+<div class="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-4 mt-5  ">
+    <form  class="flex justify-center" method="post" enctype="multipart/form-data" id="formuploadajax">
     <input type="file" name="archivo" id="archivo"><label for="archivo">Seleccionar archivo
-                <img src="https://raw.githubusercontent.com/erickmatias/plugin_wordpress_excel/main/recursos/icon/excel.png" alt="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-            <input  type="submit" name="enviar" value="Show">
-
+               </label>
+            <input  type="submit" name="enviar" value="Show" id="Show">
+            
     </form>
-
-     <form  method="post" id="changeState" >
+  
             <?php
             global $wpdb;
             $sql = $wpdb->prepare("
@@ -20,74 +19,58 @@
             "); 
             $wpdb->query($sql);
             if($wpdb->last_error == "") { $array= unserialize($wpdb->last_result[0]->option_value) ; ?>
-                <label  for="state" class>Cambiar estado a:</label>
-                <select id="state" name="state" class="rounded p-2 " >
-                <?php foreach($array['options'] as $key => $value){  echo "<option value=".$key.">".$value."</option>";}   ?>
-                </select>           
-                <?php  }
-            else {  echo "ocurrio un error al cargar los estados"; } ?>
-            <BR></BR>   
-            <button type="submit" id="button" name="enviar" value="Estado">Cambiar Estado </button> 
-        </form>
-    
-    <div class="container sm:container mx-auto sm:mx-auto grid grid-cols-5 sm:grid-cols-5 lg:grid-cols-6 gap-4 mt-10">
+                   <form  method="post" id="changeState"  class="flex justify-center ">
+                   <h3 class="mb-4 font-normal text-green-800 px-2 mt-3">Cambiar estado a:</h3>
+                    <select id="state" name="state" class="rounded mx-2" >
+                    <?php foreach($array['options'] as $key => $value){  echo "<option value=".$key.">".$value."</option>";}   ?>
+                    </select>           
+                    <?php  }
+                    else {  echo "ocurrio un error al cargar los estados"; } ?>
+                    <button type="submit" id="button" name="enviar" value="Estado" class="bg-green-600 hover:bg-green-500  font-medium px-2 mx-2 border-radius transform hover:scale-110 motion-reduce:transform-none text-white rounded">Actualizar estado</button>
+
+            </form>
+                
+ </div>     
+ <div id="esperar" class="text-bold flex justify-center my-3"></div>     <!-- <button type="submit" id="button" name="enviar" value="Estado">Cambiar Estado </button> -->
+    <div class="container sm:container mx-auto sm:mx-auto grid grid-cols-1 sm:grid-cols-5  gap-4 mt-10">
         
-        <table class=" border-collapse border border-green-800 col-span-2 col-start-2">
+        <table class=" border-collapse border border-green-800 col-span-3 col-start-2">
             <thead>
                 <tr class="bg-green-600 text-white">
                 <th class="border border-green-600 px-3 sm:px-3 md:px-5 py-1 sm:py-3 "> Remesa </th>
                 <th class="border border-green-600 px-3 sm:px-3 md:px-5 py-1 sm:py-3 " > Ubicado en BD </th>
+                <th class="border border-green-600 px-3 sm:px-3 md:px-5 py-1 sm:py-3 " > Actualizacion</th>
             </tr>
             </thead>
-            <tbody class="bg-gray-200 ">
-                <tr>
-                    <td class="border border-green-600 py-3 text-center  font-medium ">
-                        Actualización
-                    </td>
-                    <td class="border border-green-600 py-3 text-center text-red-600  font-medium">
-                        asdasda
-                    </td>
-                </tr>
+            <tbody class="bg-gray-200 " id="table-body">
+               
             </tbody>
         </table>
-        <table class=" border-collapse border border-green-800 col-start-4 lg:col-start-5">
-            <thead>
-            <tr class="bg-green-600 text-white">
-                <th class="border border-green-600 px-2 sm:px-3 md:px-5 py-1 sm:py-3  "> Actualización </th>
-            </tr>
-            </thead>
-            <tbody class="bg-gray-200 ">
-                <tr >
-                    <td class="border border-green-600 py-3 sm:py-3 text-center  font-medium ">
-                        sadasdasd
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+      
     </div>
-    <div class="container mx-auto flex justify-center mt-6">
-        <button class="bg-green-600 hover:bg-green-500 font-medium p-2 border-radius transform hover:scale-110 motion-reduce:transform-none text-white rounded">Actualizar estado</button>
-
-    </div>
-    <div id="espera">
-    </div>
-    <div id="respuesta">
-
-    </div>
-
-
-</div>
 <script>
 jQuery(document).ready(function($){
     console.log('JQuery is Working');
     var remesas=[];
     $("#formuploadajax").on("submit", function(e){
         e.preventDefault();
-        // var url=SolicitudesAjax.url;
-
-        
-        ver=document.getElementById("espera");
+        // var url=SolicitudesAjax.url
+        boton=document.getElementById("Show");
+        boton.setAttribute("disabled", "");
+        ver=document.getElementById("esperar");
         ver.innerHTML='Espere....';
+
+    //   var = extensiones_permitidas = new Array(".gif", ".jpg", ".doc", ".pdf");
+    //   extension = (archivo.substring(archivo.lastIndexOf("."))).toLowerCase();
+
+    //   for (var i = 0; i < extensiones_permitidas.length; i++) {
+    //      if (extensiones_permitidas[i] == extension) {
+    //      permitida = true;
+    //      break;
+    //      }
+    //   }
+      
+
         var myFile = document.getElementById('archivo'); 
         var file = myFile.files[0];
         var formData = new FormData();
@@ -109,12 +92,20 @@ jQuery(document).ready(function($){
                         console.log(res);
                         for(let index = 0; index < res.length; index++) {  remesas.push(res[index]); }
                          remesas.forEach( ele=> { 
-                            row =`<div>${ele.id_guia} - ${ele.estado}</div>`;
-                            $('#respuesta').append(row);   
+                            row = `<tr> <td class="border border-green-600 py-3 text-center  font-medium ">
+                                         ${ele.id_guia}
+                                    </td>
+                                </tr>`
+                           
+                            $('#table-body').append(row);
+
                          });
+                         boton.removeAttribute("disabled");
                          console.log(remesas);
                         },error:function(err){
-                        console.log(err);
+                        console.log(err.responseText);
+                        ver.innerHTML=err.responseText;
+                        boton.removeAttribute("disabled");
                     }
               });       
     });
@@ -123,7 +114,7 @@ jQuery(document).ready(function($){
         e.preventDefault();
         // var url=SolicitudesAjax.url;
 
-        ver=document.getElementById("espera");
+        ver=document.getElementById("esperar");
         ver.innerHTML='Cambiando Estado....';
         var select = document.getElementById('state'); 
         var state= select.value;  
@@ -139,12 +130,28 @@ jQuery(document).ready(function($){
             data:JSON.stringify(data),
             dataType: 'json',
             success: function(res){
-                    console.log(res);
-                /*
-                ver.innerHTML='';
-                var respuesta =document.getElementById("respuesta");
-                respuesta.innerHTML=res;
-*/
+                    var respuesta=res['data'];
+                    ver.innerHTML='';
+                    //$('#table-body').append();
+                    caja=document.getElementById("table-body");
+                  caja.innerHTML='';
+                  for(let index = 0; index < respuesta.length; index++) {  
+                        //  remesas.forEach( ele=> { 
+                            row = `<tr> <td class="border border-green-600 py-3 text-center  font-medium ">
+                                         ${respuesta[index]['id_guia']}
+                                    </td>
+                                    <td class="border border-green-600 py-3 text-center  font-medium ">
+                                         ${respuesta[index]['_bd']}
+                                    </td>
+                                    <td class="border border-green-600 text-green-800 font-bold py-3 text-center  font-medium ">
+                                         ${respuesta[index].estado}
+                                    </td>
+                                </tr>`
+                           
+                            $('#table-body').append(row);   
+                      }
+                            //  });
+
                 // for(let index = 0; index < res.length; index++) {  remesas.push(res[index]); }
                 //  remesas.forEach( ele=> { 
                 //     row =`<div>${ele.id_guia} - ${ele.estado}</div>`;
