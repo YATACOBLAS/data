@@ -6,7 +6,6 @@ Description: Sube tu excel de productos y cambia su estado con el plugin Fixblue
 Version: 0.0.1scss
 */
 
-
 add_action('init', function() {
     $url_path = trim(parse_url(add_query_arg(array()), PHP_URL_PATH), '/');
     if ( $url_path === 'api/woo_set_state_order'  ) 
