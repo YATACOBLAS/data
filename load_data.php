@@ -38,7 +38,8 @@ function loadData(){
             'manage_options',// Esto se les da a los usuarios que tengan permiso de administrador
             plugin_dir_path(__FILE__).'/app.php',//el slogan del plugin 
             null,//funcion para mostrar COntenido de la pagina o null si es que tienes una pagina aparte
-           plugin_dir_url(__FILE__).'recursos/icon/excel.png'//direccion de la imagen
+           plugin_dir_url(__FILE__).'recursos/icon/excel.png',
+           10//direccion de la imagen
             //posicion en el menu
         );
   
