@@ -1,6 +1,6 @@
 <?php 
 /*
-Plugin Name: LoadData
+Plugin Name: Cambiar Estado de Pedidos 
 Plugin Uri: https://www.LoadData.com
 Description: Sube tu excel de productos y cambia su estado con el plugin Fixblue
 Version: 0.0.1scss
