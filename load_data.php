@@ -39,7 +39,7 @@ function loadData(){
             plugin_dir_path(__FILE__).'/app.php',//el slogan del plugin 
             null,//funcion para mostrar COntenido de la pagina o null si es que tienes una pagina aparte
            plugin_dir_url(__FILE__).'recursos/icon/excel.png',
-           1//direccion de la imagen
+           2//direccion de la imagen
             //posicion en el menu
         );
   
